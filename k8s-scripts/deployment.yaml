@@ -14,11 +14,21 @@ spec:
       labels:
         app: nodejs
     spec:
+    # Uncomment the 'affinity' block if you are running K8s on multiple nodes
+#      affinity:
+#        podAntiAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#          - labelSelector:
+#              matchExpressions:
+#              - key: app
+#                operator: In
+#                values:
+#                - nodejs
+#            topologyKey: kubernetes.io/hostname
       containers:
         - name: nodejs-container
-          #image: ping-pong-api:v1
           image: < enter image url with tag >
-          imagePullPolicy: Never # set 'Never' to access local docker imag,update it to access remote docker image
+          imagePullPolicy: 'IfNotPresent'
           ports:
             - containerPort: 3000
           env:
