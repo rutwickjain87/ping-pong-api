@@ -105,6 +105,7 @@ Some of the things that can be considered are:
 - Enable Cluster Autoscaler for K8s cluster
 - Enable Horizontal Pod Autoscaler(HPA) for the API service to scale-in/scale-out depending of metrics such RPS,CPU,Memory and others
 - Use K8s NetworkPolicy to regulate pod incoming/outgoing traffic at the network level
+- User OPA(Open Policy Agent) to write security policies for K8s
 - Implement Automate Backup & Restore of the K8s cluster
 - Use ArgoCD tool to adopt GitOps model to deploy services to K8s
 - Integrate Terraform with Atlantis for effective automation following GitOps model
