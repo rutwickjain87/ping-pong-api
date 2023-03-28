@@ -40,38 +40,40 @@ Once you have a GCP account created, you can create the Kubenetes cluster either
 2. Install Google Cloud SDK - https://cloud.google.com/sdk/docs/install-sdk
 
 Please execute below steps once gcloud SDK is installed and configured on your local machine.
-    ```
+```
     glcoud init
     gcloud auth application-default login
-    ```
+```
+
 3. Compute Engine API and Kubernetes Engine API are required for Terraform automation to work on this configuration. So, enable both APIs for your Google Cloud project before continuing.
-    ```
+```
     gcloud services enable compute.googleapis.com
     gcloud services enable container.googleapis.com
-    ```
+```
+    
 4. Install gke auth plugin to let `kubectl` authorize to GKE
-    ```
+ ```
     gcloud components install gke-gcloud-auth-plugin
-    ```
+ ```
 
 
 ### Provision GKE cluster using Terraform
 
 Please execute the below steps in the given order to successfully provision and configure Kubernetes cluster
 
-  ```
+```
   terraform init
   terraform fmt -recursive
   terraform validate
   gcloud config get-value project
   terraform plan
   terraform apply
-  ```
+```
 Upon successfully execution, a kubeconfig file will be generated at the base of the repo. Use that config file to access your K8s cluster.
 
-  ```
+```
   export KUBECONFIG=<path to the generated kubeconfig file>
-  ```
+```
 
 ## K8s Deployment Manifests
 
