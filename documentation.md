@@ -2,8 +2,6 @@
 
 The aim of this document is to explain the considerations made during the design of the API service, K8s cluster and the deployment workflow.
 
-Below assumptions have been made:
-
 ## Ping-Pong API Service
 
 The API service is hosted here - https://github.com/rutwickjain87/ping-pong-api. It is forked from - https://github.com/alexwalling/ping-pong-api
@@ -38,13 +36,14 @@ Github: https://github.com/rutwickjain87/terraform-gke
 1. Create a GCP account - https://cloud.google.com/
 
 Once you have a GCP account created, you can create the Kubenetes cluster either using the GCP Console or using gCloud CLI. In order to use CLI, we need to install the Google Cloud SDK
+
 2. Install Google Cloud SDK - https://cloud.google.com/sdk/docs/install-sdk
 
 Please execute below steps once gcloud SDK is installed and configured on your local machine.
-  ```
-  glcoud init
-  gcloud auth application-default login
-  ```
+    ```
+    glcoud init
+    gcloud auth application-default login
+    ```
 3. Compute Engine API and Kubernetes Engine API are required for Terraform automation to work on this configuration. So, enable both APIs for your Google Cloud project before continuing.
     ```
     gcloud services enable compute.googleapis.com
@@ -60,19 +59,19 @@ Please execute below steps once gcloud SDK is installed and configured on your l
 
 Please execute the below steps in the given order to successfully provision and configure Kubernetes cluster
 
-```
-terraform init
-terraform fmt -recursive
-terraform validate
-gcloud config get-value project
-terraform plan
-terraform apply
-```
+  ```
+  terraform init
+  terraform fmt -recursive
+  terraform validate
+  gcloud config get-value project
+  terraform plan
+  terraform apply
+  ```
 Upon successfully execution, a kubeconfig file will be generated at the base of the repo. Use that config file to access your K8s cluster.
 
-```
-export KUBECONFIG=<path to the generated kubeconfig file>
-```
+  ```
+  export KUBECONFIG=<path to the generated kubeconfig file>
+  ```
 
 ## K8s Deployment Manifests
 
