@@ -1,5 +1,6 @@
 # Use an official Node.js runtime as a parent image
-FROM node:19.8.1 AS build
+#FROM node:19.8.1 AS build
+FROM node:latest AS build
 
 # Install dumb-init
 RUN apt update && apt install -y --no-install-recommends dumb-init
