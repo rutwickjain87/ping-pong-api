@@ -13,13 +13,22 @@ jobs:
     
     steps:
     - name: Install jq
-      run: sudo apt update && sudo apt install -y jq
+      run: sudo apt-get update && sudo apt-get install -y jq
       shell: bash
 
     - name: Checkout code
       uses: actions/checkout@v4
 
-      
+    - name: Generate Docker Image list for build=true services
+      id: docker_image_list
+      run: >-
+        echo "::set-output name=DOCKER_IMAGE_LIST::$(
+          jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < deployment.json
+        )"
+
+    - name: Show Docker Image list
+      run: 'echo "${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"'
+
     # - name: Extract version from deploymen
     #     uses: sergeysova/jq-action@v2
     #     id: generate
