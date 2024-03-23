@@ -10,8 +10,8 @@ jobs:
   trivy-scan:
     name: Trivy vulnerability scanner
     runs-on: ubuntu-latest
-    outputs:
-      docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
+    # outputs:
+    #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
     - name: Install jq
@@ -24,12 +24,13 @@ jobs:
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
       run: |
-        list=$(jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json)
-        echo "DOCKER_IMAGE_LIST=$(jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json)" >> GITHUB_OUTPUT
+        # list=$(jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json)
+        echo "DOCKER_IMAGE_LIST=$(jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json)" >> "${GITHUB_ENV}"
 
     - name: Show Docker Image list
       run: |
-        echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
+        #echo "Output: ${{ steps.docker_image_list.outputs.DOCKE }}"
+        printf '%s\n' "$DOCKER_IMAGE_LIST"
 
     # - name: Extract version from deploymen
     #     uses: sergeysova/jq-action@v2
