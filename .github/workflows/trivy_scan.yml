@@ -7,14 +7,30 @@ on:
     branches: [ dev ]
 
 jobs:
-
   trivy-scan:
     name: Trivy vulnerability scanner
     runs-on: ubuntu-latest
     
     steps:
+    - name: Install jq
+      run: sudo apt update && sudo apt install -y jq
+      shell: bash
+
     - name: Checkout code
       uses: actions/checkout@v4
+
+      
+    # - name: Extract version from deploymen
+    #     uses: sergeysova/jq-action@v2
+    #     id: generate
+    #     with:
+    #       cmd: jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < ./deployment.json
+      
+    # - name: Show my version
+    #     run: 'echo "version ${{ steps.version.outputs.value }}"'
+
+    # - name: generate docker image list
+      
       
     - name: Build Docker image
       run: docker build -t ping-pong-api:${{ github.sha }} .
