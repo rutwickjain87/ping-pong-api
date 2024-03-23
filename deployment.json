@@ -1,0 +1,573 @@
+{
+  "environment": "production",
+  "services": [
+    {
+      "name": "ais",
+      "service_description": "Account information service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.2.9",
+      "development_old_version": "1.2.7",
+      "sandbox_old_version": "1.2.8",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.2",
+      "deployment_type": "Deployment",
+      "port": "5001",
+      "node_ports": [
+        {
+          "development": "30000"
+        },
+        {
+          "sandbox": "31000"
+        },
+        {
+          "production": "32000"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "auth",
+      "service_description": "Authentication and account management service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.2.10",
+      "development_old_version": "1.2.8",
+      "sandbox_old_version": "1.2.9",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.6",
+      "deployment_type": "Deployment",
+      "port": "5002",
+      "node_ports": [
+        {
+          "development": "30001"
+        },
+        {
+          "sandbox": "31001"
+        },
+        {
+          "production": "32001"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "cron_job",
+      "service_description": "Cron job service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.7",
+      "development_old_version": "1.1.5",
+      "sandbox_old_version": "1.1.6",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.2",
+      "deployment_type": "Deployment",
+      "port": "5003",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "fx",
+      "service_description": "Currency exchange service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.2",
+      "development_old_version": "1.1.0",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.2",
+      "deployment_type": "Deployment",
+      "port": "5004",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "kms",
+      "service_description": "Key management system and data encryption service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.2",
+      "development_old_version": "1.1.0",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.2",
+      "deployment_type": "Deployment",
+      "port": "5005",
+      "node_ports": [
+        {
+          "development": "30004"
+        },
+        {
+          "sandbox": "31004"
+        },
+        {
+          "production": "32004"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "management",
+      "service_description": "management service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.3.13",
+      "development_old_version": "1.3.11",
+      "sandbox_old_version": "1.3.12",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.2.3",
+      "deployment_type": "Deployment",
+      "port": "5006",
+      "node_ports": [
+        {
+          "development": "30002"
+        },
+        {
+          "sandbox": "31002"
+        },
+        {
+          "production": "32002"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "transaction_persist",
+      "service_description": "Transaction persistence service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.9",
+      "development_old_version": "1.1.7",
+      "sandbox_old_version": "1.1.8",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.4",
+      "deployment_type": "Deployment",
+      "port": "5007",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "account_fetcher",
+      "service_description": "Bank account fetcher service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.2.10",
+      "development_old_version": "1.2.8",
+      "sandbox_old_version": "1.2.9",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.2",
+      "deployment_type": "Deployment",
+      "port": "5007",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "discovery",
+      "service_description": "Discovery service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.0.0",
+      "development_old_version": "0.0.0",
+      "sandbox_old_version": "0.0.0",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "0.0.0",
+      "deployment_type": "DaemonSet",
+      "port": "5008",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "api_auth",
+      "service_description": "Api authentication service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.2",
+      "development_old_version": "1.1.0",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.2",
+      "deployment_type": "Deployment",
+      "port": "5008",
+      "node_ports": [
+        {
+          "development": "30003"
+        },
+        {
+          "sandbox": "31003"
+        },
+        {
+          "production": "32003"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "mail",
+      "service_description": "Mail service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.2",
+      "development_old_version": "1.1.0",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.2",
+      "deployment_type": "Deployment",
+      "port": "5011",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "webhook",
+      "service_description": "Webhook service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.3",
+      "development_old_version": "1.1.2",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.3",
+      "deployment_type": "Deployment",
+      "port": "5012",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "terms",
+      "service_description": "Term of service and privacy policy",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "0.0.0",
+      "development_old_version": "0.0.0",
+      "sandbox_old_version": "0.0.0",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "0.0.0",
+      "deployment_type": "Deployment",
+      "port": "5013",
+      "node_ports": [
+        {
+          "development": "32005"
+        },
+        {
+          "sandbox": "32005"
+        },
+        {
+          "production": "32005"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "ob_api_monitoring",
+      "service_description": "Open banking API monitoring service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.3",
+      "development_old_version": "1.1.2",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.3",
+      "deployment_type": "Deployment",
+      "port": "5014",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "ais_web",
+      "service_description": "Account information web service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.8",
+      "development_old_version": "1.1.6",
+      "sandbox_old_version": "1.1.7",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.2",
+      "deployment_type": "Deployment",
+      "port": "5015",
+      "node_ports": [
+        {
+          "development": "30006"
+        },
+        {
+          "sandbox": "31006"
+        },
+        {
+          "production": "32006"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "account_verification",
+      "service_description": "Account verification service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.3",
+      "development_old_version": "1.1.0",
+      "sandbox_old_version": "1.1.1",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.1.3",
+      "deployment_type": "Deployment",
+      "port": "5016",
+      "node_ports": [
+        {
+          "development": "30007"
+        },
+        {
+          "sandbox": "31007"
+        },
+        {
+          "production": "32007"
+        }
+      ],
+      "build": false,
+      "deploy": false
+    },
+    {
+      "name": "beneficiary_fetcher",
+      "service_description": "Account beneficiaries fetcher service",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.6",
+      "development_old_version": "1.1.4",
+      "sandbox_old_version": "1.1.5",
+      "uat_old_version": "0.0.0",
+      "production_old_version": "1.0.2",
+      "deployment_type": "Deployment",
+      "port": "5016",
+      "node_ports": [],
+      "build": false,
+      "deploy": false
+    }
+  ],
+  "templated_services": [
+    {
+      "template_name": "transaction_fetcher",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "version": "1.1.11",
+      "build": true,
+      "services": [
+        {
+          "unique_tag": "sa-arab-national-bank",
+          "service_description": "Arab National Bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8000",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_ARAB_NATIONAL_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-banque-saudi-fransi",
+          "service_description": "Banque Saudi Fransi service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8001",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_BANQUE_SAUDI_FRANSI"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-alinma-bank",
+          "service_description": "Alinma Bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8002",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_ALINMA_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-saudi-national-bank",
+          "service_description": "Saudi national bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8003",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_SAUDI_NATIONAL_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-riyad-bank",
+          "service_description": "Riyad bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8004",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_RIYAD_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-saudi-investment-bank",
+          "service_description": "Saudi Investment bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8005",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_SAUDI_INVESTMENT_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-gulf-international-bank",
+          "service_description": "Gulf international bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8006",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_GULF_INTERNATIONAL_BANK"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-bank-albilad",
+          "service_description": "Bank AlBilad service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "1.1.11",
+          "deployment_type": "Deployment",
+          "port": "8007",
+          "node_ports": [],
+          "deploy": true,
+          "variables": [
+            {
+              "BANK_CODE": "SA_BANK_ALBILAD"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-bank-aljazira",
+          "service_description": "Bank Aljazira service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.0.1",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "0.0.0",
+          "deployment_type": "Deployment",
+          "port": "8008",
+          "node_ports": [],
+          "deploy": false,
+          "variables": [
+            {
+              "BANK_CODE": "SA_BANK_ALJAZIRA"
+            }
+          ]
+        },
+        {
+          "unique_tag": "sa-spare-model-bank",
+          "service_description": "Spare model bank service",
+          "development_old_version": "1.1.7",
+          "sandbox_old_version": "1.1.8",
+          "uat_old_version": "0.0.0",
+          "production_old_version": "0.0.0",
+          "deployment_type": "Deployment",
+          "port": "8009",
+          "node_ports": [],
+          "deploy": false,
+          "variables": [
+            {
+              "BANK_CODE": "SA_SPARE_MODEL_BANK"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [
+    {
+      "name": "log-analytics-master",
+      "operation": "upgrade",
+      "registry": "",
+      "version": "",
+      "deployment_type": "StatefulSet",
+      "deploy": false
+    },
+    {
+      "name": "log-analytics-data-node",
+      "operation": "upgrade",
+      "registry": "",
+      "version": "",
+      "deployment_type": "StatefulSet",
+      "deploy": false
+    },
+    {
+      "name": "log-analytics-dashboard",
+      "operation": "upgrade",
+      "registry": "",
+      "version": "",
+      "deployment_type": "Deployment",
+      "deploy": false
+    },
+    {
+      "name": "kafka",
+      "operation": "upgrade",
+      "registry": "",
+      "version": "3.5.1",
+      "deployment_type": "Deployment",
+      "deploy": false
+    },
+    {
+      "name": "infinispan",
+      "operation": "upgrade",
+      "registry": "me-central2-docker.pkg.dev/spare-ksa/sa-universal-api",
+      "image": "infinispan",
+      "tag": "1.0.0",
+      "version": "1.0.0",
+      "deployment_type": "StatefulSet",
+      "deploy": false,
+      "build": false
+    },
+    {
+      "name": "keycloak",
+      "operation": "upgrade",
+      "registry": "",
+      "version": "1.0.0",
+      "deployment_type": "StatefulSet",
+      "deploy": false
+    }
+  ]
+}
