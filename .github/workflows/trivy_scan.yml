@@ -25,7 +25,7 @@ jobs:
       id: docker_image_list
       run: |
         # list=$((jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < deployment.json))
-        list=$((jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json))
+        list=$(jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} | flatten | join("")' < deployment.json)
         echo "DOCKER_IMAGE_LIST=$list" >> GITHUB_OUTPUT
 
     - name: Show Docker Image list
