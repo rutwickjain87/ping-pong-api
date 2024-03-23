@@ -10,6 +10,8 @@ jobs:
   trivy-scan:
     name: Trivy vulnerability scanner
     runs-on: ubuntu-latest
+    outputs:
+      docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
     - name: Install jq
@@ -21,13 +23,13 @@ jobs:
 
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
-      run: >-
-        echo "::set-output name=DOCKER_IMAGE_LIST::$(
-          jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < deployment.json
-        )"
+      run: |
+        list=$((jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < deployment.json))
+        echo "DOCKER_IMAGE_LIST=$list" >> GITHUB_OUTPUT
 
     - name: Show Docker Image list
-      run: 'echo "${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"'
+      run: |
+        echo "Output: ${{ needs.trivy-scan.outputs.docker_image_list.DOCKER_IMAGE_LIST }}"
 
     # - name: Extract version from deploymen
     #     uses: sergeysova/jq-action@v2
