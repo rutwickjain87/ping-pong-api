@@ -42,7 +42,7 @@ jobs:
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
       run: |
-        list=$(jq -r '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
+        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
         echo $list
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
 
