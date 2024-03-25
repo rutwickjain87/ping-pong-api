@@ -51,6 +51,13 @@ jobs:
         #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
         printf '%s\n' "$DOCKER_IMAGE_LIST"
 
+    - name: Loop through paths
+      id: loop
+      run: |
+        for i in "${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"; do
+          echo "Current path: $i"
+          # Add your logic here for each path
+        done
     # - name: Extract version from deploymen
     #     uses: sergeysova/jq-action@v2
     #     id: generate
