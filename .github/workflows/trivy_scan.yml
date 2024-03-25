@@ -23,7 +23,7 @@ jobs:
 
     - name: Print List
       env:
-        MY_LIST: '"a","b","c"'
+        MY_LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/cron_job:1.1.7","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/fx:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/kms:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/management:1.3.13","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/transaction_persist:1.1.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/account_fetcher:1.2.10","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/discovery:1.0.0","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/api_auth:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/mail:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/webhook:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/terms:0.0.0","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ob_api_monitoring:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais_web:1.1.8","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/account_verification:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/beneficiary_fetcher:1.1.6"'
       run: bash .github/scripts/print-list.sh
       shell: bash
 
