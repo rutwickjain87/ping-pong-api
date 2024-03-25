@@ -14,19 +14,18 @@ jobs:
     #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
-
-    - name: Print List
-      env:
-        MY_LIST: '"a","b","c"'
-      run: bash .github/scripts/print-list.sh
-      shell: bash
-
     - name: Install jq
       run: sudo apt-get update && sudo apt-get install -y jq
       shell: bash
 
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Print List
+      env:
+        MY_LIST: '"a","b","c"'
+      run: bash .github/scripts/print-list.sh
+      shell: bash
 
     - name: Set color
       id: color-selector
