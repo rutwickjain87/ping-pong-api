@@ -40,7 +40,7 @@ jobs:
         printf '%s\n' "$action_state" # This will output 'yellow'
 
     - name: Generate Docker Image list for build=true services
-      id: docker-image-list
+      id: docker_image_list
       run: |
         list=$(jq -r '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
         echo $list
@@ -48,7 +48,7 @@ jobs:
 
     - name: Show Docker Image list
       run: |
-        #echo "Output: ${{ steps.docker-docker-image-list.outputs.DOCKER_IMAGE_LIST }}"
+        #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
         printf '%s\n' "$DOCKER_IMAGE_LIST"
 
     # - name: Extract version from deploymen
