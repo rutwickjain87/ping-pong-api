@@ -68,16 +68,18 @@ jobs:
       run: |
         echo "JSON Representation: ${{ toJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}"
 
-    # - name: Loop through Images
-    #   id: loop
-    #   env: 
-    #    # LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
-    #     LIST: ${{ fromJSON(steps.docker_image_list.outputs.DOCKER_IMAGE_LIST) }}
-    #   run: |
-    #     for i in $LIST; do
-    #       echo "Current Image: $i"
-    #       # Add your logic here for each path
-    #     done
+    - name: Loop through Images
+      id: loop
+      # env: 
+      #  # LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
+      # LIST: ${{ fromJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}
+      run: |
+        for i in "${{ fromJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}"; do
+          echo "Current Image: $i"
+          # Add your logic here for each path
+        done
+
+
     # - name: Extract version from deploymen
     #     uses: sergeysova/jq-action@v2
     #     id: generate
