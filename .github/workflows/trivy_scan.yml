@@ -52,7 +52,7 @@ jobs:
 
     - name: Loop over strings
       env:
-        strs: "string1,string2"
+        strs: 'string1,string2'
       run: |
         echo ${{ env.strs }}
         YOUR_LIST=${{env.strs}}
