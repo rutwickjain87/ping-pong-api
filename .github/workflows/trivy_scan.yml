@@ -52,20 +52,22 @@ jobs:
         echo $list
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
 
-    - name: Show Docker Image list
+    # - name: Show Docker Image list
+    #   env: 
+    #     LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
+    #   run: |
+    #     #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
+    #     #printf '%s\n' "$DOCKER_IMAGE_LIST"
+    #     #echo ${{ env.DOCKER_IMAGE_LIST }}
+    #     echo $LIST
+
+    - name: Loop through Images
+      id: loop
       env: 
         LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
       run: |
-        #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
-        #printf '%s\n' "$DOCKER_IMAGE_LIST"
-        #echo ${{ env.DOCKER_IMAGE_LIST }}
-        echo $LIST
-
-    - name: Loop through paths
-      id: loop
-      run: |
-        for i in "${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"; do
-          echo "Current path: $i"
+        for i in "${{ fromJSON(env.DOCKER_IMAGE_LIST) }}"; do
+          echo "Current Image: $i"
           # Add your logic here for each path
         done
     # - name: Extract version from deploymen
