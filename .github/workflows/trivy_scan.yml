@@ -81,7 +81,7 @@ jobs:
           # Add your logic here for each path
         done
 
-        for i in "${DOC}"; do
+        for i in "${DOCKER}"; do
           echo "Current Image: $i"
         # Add your logic here for each path
         done
