@@ -56,7 +56,8 @@ jobs:
       run: |
         #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
         #printf '%s\n' "$DOCKER_IMAGE_LIST"
-        echo ${{ env.DOCKER_IMAGE_LIST }}
+        #echo ${{ env.DOCKER_IMAGE_LIST }}
+        echo ${{ fromJSON(vars.DOCKER_IMAGE_LIST) }}
 
     - name: Loop through paths
       id: loop
