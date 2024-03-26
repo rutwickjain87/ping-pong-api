@@ -14,12 +14,12 @@ jobs:
     #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
-    - name: Install jq
-      run: sudo apt-get update && sudo apt-get install -y jq
-      shell: bash
+    # - name: Install jq
+    #   run: sudo apt-get update && sudo apt-get install -y jq
+    #   shell: bash
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+    # - name: Checkout code
+    #   uses: actions/checkout@v4
 
     # - name: Print List
     #   env:
@@ -55,32 +55,32 @@ jobs:
           # Perform actions using $item
         done
 
-    - name: Generate Docker Image list for build=true services
-      id: docker_image_list
-      run: |
-        #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
-        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
-        echo "List: $list"
-        echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
-        echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
-        echo "${{ env.DOCKER_IMAGE_LIST }}"
+    # - name: Generate Docker Image list for build=true services
+    #   id: docker_image_list
+    #   run: |
+    #     #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
+    #     list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
+    #     echo "List: $list"
+    #     echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
+    #     echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
+    #     echo "${{ env.DOCKER_IMAGE_LIST }}"
 
 
-    - name: Show Docker Image list
-      # env: 
-      #   LIST: ${
-      run: |
-        #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
-        #printf '%s\n' "$DOCKER_IMAGE_LIST"
-        echo $DOCKER_IMAGE_LIST
+    # - name: Show Docker Image list
+    #   # env: 
+    #   #   LIST: ${
+    #   run: |
+    #     #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
+    #     #printf '%s\n' "$DOCKER_IMAGE_LIST"
+    #     echo $DOCKER_IMAGE_LIST
 
-    - name: test list
-      env:
-        LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10"'
-      run: |
-        for image in "$LIST"; do
-          echo "Current Image: $image"
-        done
+    # - name: test list
+    #   env:
+    #     LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10"'
+    #   run: |
+    #     for image in "$LIST"; do
+    #       echo "Current Image: $image"
+    #     done
         
     # - name: Print JSON Representation
     #   run: |
