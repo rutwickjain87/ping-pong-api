@@ -66,7 +66,7 @@ jobs:
 
     - name: test list
       env:
-        LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10"'
+        LIST: 'me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9,me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10'
       run: |
         for image in "$LIST"; do
           echo "Current Image: $image"
