@@ -53,11 +53,13 @@ jobs:
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
 
     - name: Show Docker Image list
+      env: 
+        LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
       run: |
         #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
         #printf '%s\n' "$DOCKER_IMAGE_LIST"
         #echo ${{ env.DOCKER_IMAGE_LIST }}
-        echo ${{ fromJSON(vars.DOCKER_IMAGE_LIST) }}
+        echo $LIST
 
     - name: Loop through paths
       id: loop
