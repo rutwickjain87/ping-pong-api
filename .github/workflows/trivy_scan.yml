@@ -52,6 +52,7 @@ jobs:
         list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
         echo "List: $list"
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
+        echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
         echo "${{ env.DOCKER_IMAGE_LIST }}"
 
 
@@ -62,6 +63,10 @@ jobs:
         #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
         #printf '%s\n' "$DOCKER_IMAGE_LIST"
         echo $DOCKER_IMAGE_LIST
+    
+    - name: Print JSON Representation
+      run: |
+        echo "JSON Representation: ${{ toJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}"
 
     # - name: Loop through Images
     #   id: loop
