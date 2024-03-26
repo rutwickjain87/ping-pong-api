@@ -49,6 +49,7 @@ jobs:
       env:
         strs: '"string1","string2"'
       run: |
+        echo ${{ env.strs }}
         #for item in "string1" "string2" "string3"; do
         for image in "$strs[@]"; do
           echo "Processing $item"
