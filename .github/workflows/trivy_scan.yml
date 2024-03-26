@@ -45,6 +45,17 @@ jobs:
     #   run: |
     #     printf '%s\n' "$action_state" # This will output 'yellow'
 
+    - name: Iterate over objects
+      run: |
+        echo "${{ github.event.pull_request.labels }}"
+        for obj in ${{ github.event.pull_request.labels }}
+        do
+          echo "Object: $obj"
+          # Access specific properties of the object as needed
+        done
+
+
+
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
       run: |
@@ -66,7 +77,7 @@ jobs:
 
     - name: test list
       env:
-        LIST: 'me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9,me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10'
+        LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10"'
       run: |
         for image in "$LIST"; do
           echo "Current Image: $image"
