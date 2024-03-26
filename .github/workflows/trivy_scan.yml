@@ -74,7 +74,7 @@ jobs:
       #  # LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
       # LIST: ${{ fromJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}
       run: |
-        for i in ${{ fromJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}; do
+        for i in "${DOCKER_IMAGE_LIST}"; do
           echo "Current Image: $i"
           # Add your logic here for each path
         done
