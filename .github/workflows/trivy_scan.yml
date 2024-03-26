@@ -14,61 +14,39 @@ jobs:
     #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
+    # Configure Google cloud CLI
+    - name: Configuring google cloud
+      env:
+        GCP_KEY: ${{ secrets.GCP_KEY }}
+        GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
+        USE_GKE_GCLOUD_AUTH_PLUGIN: true
+        CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+      run: |
+        echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
+        openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
+        gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
+        gcloud config set project spare-ksa || exit 255
+        gcloud config set compute/zone me-central2 || exit 255
+        # gcloud container clusters get-credentials sa-universal-api-0 || exit 255
+    # Set up Cloud SDK
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        install_components: 'gke-gcloud-auth-plugin'
+
     - name: Install jq
       run: |
-        sudo apt-get install wget apt-transport-https gnupg lsb-release
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-        sudo apt-get update
-        sudo apt-get install trivy jq -y
+        # sudo apt-get install wget apt-transport-https gnupg lsb-release
+        # wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        # echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        # sudo apt-get update
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+        sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+        sudo apt-get update && sudo apt-get install jq -y
       shell: bash
 
     - name: Checkout code
       uses: actions/checkout@v4
-
-    # - name: Print List
-    #   env:
-    #     MY_LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/cron_job:1.1.7","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/fx:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/kms:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/management:1.3.13","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/transaction_persist:1.1.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/account_fetcher:1.2.10","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/discovery:1.0.0","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/api_auth:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/mail:1.1.2","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/webhook:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/terms:0.0.0","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ob_api_monitoring:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais_web:1.1.8","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/account_verification:1.1.3","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/beneficiary_fetcher:1.1.6"'
-    #   run: bash .github/scripts/print-list.sh
-    #   shell: bash
-
-    # - name: Set color
-    #   id: color-selector
-    #   run: echo "SELECTED_COLOR=green" >> "$GITHUB_OUTPUT"
-
-    # - name: Get color
-    #   env:
-    #     SELECTED_COLOR: ${{ steps.color-selector.outputs.SELECTED_COLOR }}
-    #   run: echo "The selected color is $SELECTED_COLOR"
-      
-    # - name: Set the value
-    #   id: step_one
-    #   run: |
-    #     echo "action_state=yellow" >> "$GITHUB_ENV"
-    # - name: Use the value
-    #   id: step_two
-    #   run: |
-    #     printf '%s\n' "$action_state" # This will output 'yellow'
-
-    # - name:  defien list of strings
-    #   id: list
-    #   run: |
-        
-
-    # - name: Loop over strings
-    #   env:
-    #     strs: 'string1,string2'
-    #   run: |
-    #     echo ${{ env.strs }}
-    #     YOUR_LIST=${{env.strs}}
-    #     IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
-    #     for i in "${YOUR_LIST[@]}"; do
-    #       echo "$i"
-    #     done
-    #     # for image in "${tmp[@]}"; do
-    #     #   echo "Processing $item"
-    #     #   # Perform actions using $item
-    #     # done
 
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
@@ -77,18 +55,28 @@ jobs:
         list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]//g")
         echo "List: $list"
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
-        echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
-        echo "${{ env.DOCKER_IMAGE_LIST }}"
+        # echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
+        # echo "${{ env.DOCKER_IMAGE_LIST }}"
 
 
     - name: Show Docker Image list
+      env:
+        GCP_KEY: ${{ secrets.GCP_KEY }}
+        GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
+        USE_GKE_GCLOUD_AUTH_PLUGIN: true
+        CLOUDSDK_CORE_DISABLE_PROMPTS: 1
       run: |
+        echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
+        openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
+        gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
+        gcloud auth configure-docker me-central2-docker.pkg.dev
+      
         echo $DOCKER_IMAGE_LIST
         YOUR_LIST=$DOCKER_IMAGE_LIST
         IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
         for i in "${YOUR_LIST[@]}"; do
           echo "$i"
-          trivy image --format sarif --output trivy-sarif "$i"
+          trivy image --format sarif --output trivy-sarif-"$i" "$i"
         done
 
     # - name: Loop through Images
