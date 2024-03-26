@@ -64,9 +64,9 @@ jobs:
     - name: Loop through Images
       id: loop
       env: 
-        LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
+        LIST: ${{ env.DOCKER_IMAGE_LIST }}
       run: |
-        for i in "${{ fromJSON(env.DOCKER_IMAGE_LIST) }}"; do
+        for i in $LIST; do
           echo "Current Image: $i"
           # Add your logic here for each path
         done
