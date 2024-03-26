@@ -55,14 +55,13 @@ jobs:
         echo "${{ env.DOCKER_IMAGE_LIST }}"
 
 
-    # - name: Show Docker Image list
-    #   env: 
-    #     LIST: ${{ ste
-    #   run: |
-    #     #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
-    #     #printf '%s\n' "$DOCKER_IMAGE_LIST"
-    #     #echo ${{ env.DOCKER_IMAGE_LIST }}
-    #     echo $LIST
+    - name: Show Docker Image list
+      # env: 
+      #   LIST: ${
+      run: |
+        #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
+        #printf '%s\n' "$DOCKER_IMAGE_LIST"
+        echo $DOCKER_IMAGE_LIST
 
     # - name: Loop through Images
     #   id: loop
