@@ -45,16 +45,12 @@ jobs:
     #   run: |
     #     printf '%s\n' "$action_state" # This will output 'yellow'
 
-    - name: Iterate over objects
+    - name: Loop over strings
       run: |
-        echo "${{ github.event.pull_request.labels }}"
-        for obj in ${{ github.event.pull_request.labels }}
-        do
-          echo "Object: $obj"
-          # Access specific properties of the object as needed
+        for item in "string1" "string2" "string3"; do
+          echo "Processing $item"
+          # Perform actions using $item
         done
-
-
 
     - name: Generate Docker Image list for build=true services
       id: docker_image_list
