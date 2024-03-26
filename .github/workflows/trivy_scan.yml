@@ -74,7 +74,7 @@ jobs:
       #  # LIST: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
       # LIST: ${{ fromJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}
       env:
-        DOCKER: ${{ toJSON(env.DOCKER_IMAGE_LIST) }}
+        DOCKER: ${{ fromJSON(env.DOCKER_IMAGE_LIST) }}
       run: |
         for i in "${DOCKER_IMAGE_LIST}"; do
           echo "Current Image: $i"
