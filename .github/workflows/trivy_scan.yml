@@ -69,7 +69,7 @@ jobs:
       id: docker_image_list
       run: |
         #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
-        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]/'/g")
+        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]//g")
         echo "List: $list"
         echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
         echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
