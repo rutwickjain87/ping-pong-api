@@ -52,11 +52,12 @@ jobs:
 
     - name: Loop over strings
       env:
-        strs: '"string1","string2"'
+        strs: 'string1,string2'
       run: |
         echo ${{ env.strs }}
+        tmp=${{env.strs}}
         #for item in "string1" "string2" "string3"; do
-        for image in "${{ env.strs }}"; do
+        for image in "${tmp[@]}"; do
           echo "Processing $item"
           # Perform actions using $item
         done
