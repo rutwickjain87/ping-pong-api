@@ -45,9 +45,9 @@ jobs:
     #   run: |
     #     printf '%s\n' "$action_state" # This will output 'yellow'
 
-    - name:  defien list of strings
-      id: list
-      run: |
+    # - name:  defien list of strings
+    #   id: list
+    #   run: |
         
 
     - name: Loop over strings
