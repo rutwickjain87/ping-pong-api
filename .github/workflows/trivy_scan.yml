@@ -46,8 +46,11 @@ jobs:
     #     printf '%s\n' "$action_state" # This will output 'yellow'
 
     - name: Loop over strings
+      env:
+        strs: '"string1","string2"'
       run: |
-        for item in "string1" "string2" "string3"; do
+        #for item in "string1" "string2" "string3"; do
+        for image in "$strs"; do
           echo "Processing $item"
           # Perform actions using $item
         done
