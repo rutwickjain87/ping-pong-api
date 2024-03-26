@@ -50,37 +50,46 @@ jobs:
     #   run: |
         
 
-    - name: Loop over strings
-      env:
-        strs: 'string1,string2'
+    # - name: Loop over strings
+    #   env:
+    #     strs: 'string1,string2'
+    #   run: |
+    #     echo ${{ env.strs }}
+    #     YOUR_LIST=${{env.strs}}
+    #     IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
+    #     for i in "${YOUR_LIST[@]}"; do
+    #       echo "$i"
+    #     done
+    #     # for image in "${tmp[@]}"; do
+    #     #   echo "Processing $item"
+    #     #   # Perform actions using $item
+    #     # done
+
+    - name: Generate Docker Image list for build=true services
+      id: docker_image_list
       run: |
-        echo ${{ env.strs }}
-        YOUR_LIST=${{env.strs}}
-        #for item in "string1" "string2" "string3"; do
+        #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
+        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]/'/g")
+        echo "List: $list"
+        echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
+        echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
+        echo "${{ env.DOCKER_IMAGE_LIST }}"
+
+
+    - name: Show Docker Image list
+      run: |
+        echo $DOCKER_IMAGE_LIST
+        YOUR_LIST=$DOCKER_IMAGE_LIST
         IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
         for i in "${YOUR_LIST[@]}"; do
           echo "$i"
         done
-        # for image in "${tmp[@]}"; do
-        #   echo "Processing $item"
-        #   # Perform actions using $item
-        # done
 
-    # - name: Generate Docker Image list for build=true services
-    #   id: docker_image_list
-    #   run: |
-    #     #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
-    #     list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json)
-    #     echo "List: $list"
-    #     echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
-    #     echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
-    #     echo "${{ env.DOCKER_IMAGE_LIST }}"
-
-
-    # - name: Show Docker Image list
-    #   # env: 
-    #   #   LIST: ${
-    #   run: |
+    #     YOUR_LIST=${{env.strs}}
+    #     IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
+    #     for i in "${YOUR_LIST[@]}"; do
+    #       echo "$i"
+    #     done
     #     #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
     #     #printf '%s\n' "$DOCKER_IMAGE_LIST"
     #     echo $DOCKER_IMAGE_LIST
