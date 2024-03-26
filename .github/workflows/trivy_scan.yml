@@ -15,7 +15,12 @@ jobs:
     
     steps:
     - name: Install jq
-      run: sudo apt-get update && sudo apt-get install -y jq
+      run: |
+        sudo apt-get install wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+        sudo apt-get install trivy jq -y
       shell: bash
 
     - name: Checkout code
@@ -83,28 +88,8 @@ jobs:
         IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
         for i in "${YOUR_LIST[@]}"; do
           echo "$i"
+          trivy image --format sarif --output trivy-sarif-$i $i
         done
-
-    #     YOUR_LIST=${{env.strs}}
-    #     IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
-    #     for i in "${YOUR_LIST[@]}"; do
-    #       echo "$i"
-    #     done
-    #     #echo "Output: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}"
-    #     #printf '%s\n' "$DOCKER_IMAGE_LIST"
-    #     echo $DOCKER_IMAGE_LIST
-
-    # - name: test list
-    #   env:
-    #     LIST: '"me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/ais:1.2.9","me-central2-docker.pkg.dev/spare-ksa/sa-universal-api/auth:1.2.10"'
-    #   run: |
-    #     for image in "$LIST"; do
-    #       echo "Current Image: $image"
-    #     done
-        
-    # - name: Print JSON Representation
-    #   run: |
-    #     echo "JSON Representation: ${{ toJSON(steps.docker_image_list.outputs.IMAGE_LIST) }}"
 
     # - name: Loop through Images
     #   id: loop
@@ -129,13 +114,7 @@ jobs:
     #     uses: sergeysova/jq-action@v2
     #     id: generate
     #     with:
-    #       cmd: jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < ./deployment.json
-      
-    # - name: Show my version
-    #     run: 'echo "version ${{ steps.version.outputs.value }}"'
-
-    # - name: generate docker image list
-      
+    #       cmd: jq -r '.services[] | select(.build == false) |  {image: (.registry + "/" + .name  + ":" + .version)} ' < ./deployment.json      
       
     # - name: Build Docker image
     #   run: docker build -t ping-pong-api:${{ github.sha }} .
