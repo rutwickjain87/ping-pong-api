@@ -50,7 +50,7 @@ jobs:
       run: |
         list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/  /g")
         echo $list
-        echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
+        echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
 
     - name: Show Docker Image list
       env: 
