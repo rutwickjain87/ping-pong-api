@@ -82,10 +82,10 @@ jobs:
 
     - name: Scan Docker images with Trivy
       run: |
-        docker pull python-alpine:3.4
+        docker pull nginx:latest
         docker pull busybox:latest
         # Add more pull commands for additional images
-        trivy --format=json python-alpine:3.4  > trivy_results_image1.json
+        trivy --format=json nginx:latest  > trivy_results_image1.json
         trivy --format=json busybox:latest > trivy_results_image2.json
         # Add more trivy commands for additional images
 
