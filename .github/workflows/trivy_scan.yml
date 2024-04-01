@@ -9,75 +9,93 @@ on:
 jobs:
   trivy-scan:
     name: Trivy vulnerability scanner
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestv
+    environment: development
     # outputs:
     #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
     steps:
-    # Configure Google cloud CLI
-    - name: Configuring google cloud
-      env:
-        GCP_KEY: ${{ secrets.GCP_KEY }}
-        GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
-        USE_GKE_GCLOUD_AUTH_PLUGIN: true
-        CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-      run: |
-        echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
-        openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
-        gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
-        gcloud config set project spare-ksa || exit 255
-        gcloud config set compute/zone me-central2 || exit 255
-        # gcloud container clusters get-credentials sa-universal-api-0 || exit 255
-    # Set up Cloud SDK
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        install_components: 'gke-gcloud-auth-plugin'
+    # # Configure Google cloud CLI
+    # - name: Configuring google cloud
+    #   env:
+    #     GCP_KEY: ${{ secrets.GCP_KEY }}
+    #     GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
+    #     USE_GKE_GCLOUD_AUTH_PLUGIN: true
+    #     CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+    #   run: |
+    #     echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
+    #     openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
+    #     gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
+    #     gcloud config set project spare-ksa || exit 255
+    #     gcloud config set compute/zone me-central2 || exit 255
+    #     # gcloud container clusters get-credentials sa-universal-api-0 || exit 255
+    # # Set up Cloud SDK
+    # - name: Set up Cloud SDK
+    #   uses: google-github-actions/setup-gcloud@v1
+    #   with:
+    #     install_components: 'gke-gcloud-auth-plugin'
 
     - name: Install jq
       run: |
-        # sudo apt-get install wget apt-transport-https gnupg lsb-release
-        # wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-        # echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
         # sudo apt-get update
-        wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
-        sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
-        sudo apt-get update && sudo apt-get install jq -y
+        # wget https://github.com/aquasecurity/trivy/releases/download/v0.50.0/trivy_0.50.0_Linux-64bit.deb
+        # sudo dpkg -i trivy_0.50.0_Linux-64bit.deb
+        sudo apt-get update && sudo apt-get install trivy jq -y
       shell: bash
 
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Generate Docker Image list for build=true services
-      id: docker_image_list
-      run: |
-        #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
-        list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]//g")
-        echo "List: $list"
-        echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
-        # echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
-        # echo "${{ env.DOCKER_IMAGE_LIST }}"
+    # - name: Generate Docker Image list for build=true services
+    #   id: docker_image_list
+    #   run: |
+    #     #list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed "s/\[\|\]/\'/g")
+    #     list=$(jq -cr '[.services[] | select(.build == false) | (.registry + "/" + .name  + ":" + .version)]' < deployment.json | sed 's/\"//g'| sed "s/[][]//g")
+    #     echo "List: $list"
+    #     echo "DOCKER_IMAGE_LIST=$list" >> "$GITHUB_ENV"
+    #     # echo "IMAGE_LIST=$list" >> "$GITHUB_OUTPUT"
+    #     # echo "${{ env.DOCKER_IMAGE_LIST }}"
 
 
-    - name: Show Docker Image list
-      env:
-        GCP_KEY: ${{ secrets.GCP_KEY }}
-        GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
-        USE_GKE_GCLOUD_AUTH_PLUGIN: true
-        CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-      run: |
-        echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
-        openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
-        gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
-        gcloud auth configure-docker me-central2-docker.pkg.dev
+    # - name: Show Docker Image list
+    #   env:
+    #     GCP_KEY: ${{ secrets.GCP_KEY }}
+    #     GCP_ENC_KEY: ${{ secrets.GCP_ENC_KEY }}
+    #     USE_GKE_GCLOUD_AUTH_PLUGIN: true
+    #     CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+    #   run: |
+    #     echo -n "$GCP_KEY" | base64 -d > gcp_key.enc || exit 255
+    #     openssl enc -aes-256-ctr -pbkdf2 -d -pass pass:"$GCP_ENC_KEY" -p -in gcp_key.enc -out gcp_key.json
+    #     gcloud auth activate-service-account --key-file=gcp_key.json || exit 255
+    #     gcloud auth configure-docker me-central2-docker.pkg.dev
       
-        echo $DOCKER_IMAGE_LIST
-        YOUR_LIST=$DOCKER_IMAGE_LIST
-        IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
-        for i in "${YOUR_LIST[@]}"; do
-          echo "$i"
-          trivy image --format sarif --output trivy-sarif-"$i" "$i"
-        done
+    #     echo $DOCKER_IMAGE_LIST
+    #     YOUR_LIST=$DOCKER_IMAGE_LIST
+    #     IFS=',' read -ra YOUR_LIST <<< "$YOUR_LIST"
+    #     for i in "${YOUR_LIST[@]}"; do
+    #       echo "$i"
+    #       trivy image --format sarif --output trivy-sarif-"$i" "$i"
+    #     done
+
+    - name: Scan Docker images with Trivy
+      run: |
+        docker pull python-alpine:3.4
+        docker pull busybox:latest
+        # Add more pull commands for additional images
+        trivy --format=json python-alpine:3.4  > trivy_results_image1.json
+        trivy --format=json busybox:latest > trivy_results_image2.json
+        # Add more trivy commands for additional images
+
+    - name: Merge Trivy results into a single SARIF file
+      uses: github/codeql-action/analyze@v1
+      with:
+        # Merge JSON results into a single SARIF file
+        files: trivy_results_image1.json,trivy_results_image2.json
+        # Adjust the SARIF output file name if needed
+        output: trivy_scan_results.sarif
 
     # - name: Loop through Images
     #   id: loop
