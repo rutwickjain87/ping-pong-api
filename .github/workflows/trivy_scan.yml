@@ -9,8 +9,8 @@ on:
 jobs:
   trivy-scan:
     name: Trivy vulnerability scanner
-    runs-on: ubuntu-latestv
-    environment: development
+    runs-on: ubuntu-latest
+    # environment: development
     # outputs:
     #   docker_image_list: ${{ steps.docker_image_list.outputs.DOCKER_IMAGE_LIST }}
     
