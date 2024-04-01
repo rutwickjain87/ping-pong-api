@@ -85,8 +85,8 @@ jobs:
         docker pull nginx:latest
         docker pull busybox:latest
         # Add more pull commands for additional images
-        trivy --format=json nginx:latest  > trivy_results_image1.json
-        trivy --format=json busybox:latest > trivy_results_image2.json
+        trivy image --format=json nginx:latest  > trivy_results_image1.json
+        trivy image --format=json busybox:latest > trivy_results_image2.json
         # Add more trivy commands for additional images
 
     - name: Merge Trivy results into a single SARIF file
